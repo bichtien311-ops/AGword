@@ -1,0 +1,13 @@
+pydantic
+python-dotenv
+google-api-python-client
+google-auth-oauthlib
+uvicorn
+fastapi
+httpx
+beautifulsoup4
+selenium
+playwright
+python-docx
+matplotlib
+numpy
