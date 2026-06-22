@@ -1,3 +1,10 @@
+"""
+Логгер проекта ГОСТ Word.
+
+Настраивает логирование в консоль и файл (.tmp/logs/).
+Все execution-скрипты используют этот модуль.
+"""
+
 import logging
 import os
 from datetime import datetime
@@ -6,12 +13,19 @@ from datetime import datetime
 def setup_logger(name=__name__):
     """
     Настраивает логгер, который выводит сообщения в консоль и в файл в папке .tmp/logs/.
+    Предотвращает дублирование handlers при повторных вызовах.
     """
     logger = logging.getLogger(name)
+
+    # Предотвращаем добавление дублирующих handlers
+    if logger.handlers:
+        return logger
+
     logger.setLevel(logging.DEBUG)
 
-    # Создаем папку для логов
-    log_dir = os.path.join(os.getcwd(), ".tmp", "logs")
+    # Определяем корень проекта (на 2 уровня выше utils/)
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    log_dir = os.path.join(project_root, ".tmp", "logs")
     os.makedirs(log_dir, exist_ok=True)
 
     # Имя файла лога с текущей датой

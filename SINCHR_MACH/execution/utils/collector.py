@@ -1,4 +1,12 @@
+"""
+Сборщик контекста проекта.
+
+Генерирует сводку структуры проекта и содержимого файлов
+для передачи другим AI-моделям.
+"""
+
 import os
+
 
 def collect_project_context(root_path, output_file):
     """
@@ -9,7 +17,7 @@ def collect_project_context(root_path, output_file):
 
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write("# Project Context Collector\n\n")
-        
+
         f.write("## Directory Structure\n")
         for root, dirs, files in os.walk(root_path):
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
@@ -19,7 +27,7 @@ def collect_project_context(root_path, output_file):
             sub_indent = ' ' * 4 * (level + 1)
             for file in files:
                 f.write(f"{sub_indent}{file}\n")
-        
+
         f.write("\n## File Contents\n")
         for root, dirs, files in os.walk(root_path):
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
@@ -34,6 +42,7 @@ def collect_project_context(root_path, output_file):
                     except Exception as e:
                         f.write(f"Error reading file: {e}\n")
                     f.write("\n--- END FILE ---\n")
+
 
 if __name__ == "__main__":
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
